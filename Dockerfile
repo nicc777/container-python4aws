@@ -1,4 +1,6 @@
-FROM python:3.12-bookworm
+ARG IMAGE_TAG=3.12-bookworm
+
+FROM python:${IMAGE_TAG}
 
 # Update the system and install some pre-requisites
 RUN apt update && apt upgrade -y && apt -y install python3-dev curl zip git

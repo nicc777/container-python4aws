@@ -21,3 +21,13 @@ docker run --rm python4aws python --version
 docker run --rm python4aws aws --version
 # OUTPUT (example): aws-cli/2.15.8 Python/3.11.6 Linux/6.5.0-10010-tuxedo exe/x86_64.debian.12 prompt/off
 ```
+
+## Build a specific version of Python
+
+Example to build on Python 3.10:
+
+```shell
+docker build -t python4aws --build-arg="IMAGE_TAG=3.10-bookworm" .
+```
+
+Consult [The Python Docker Hub Page](https://hub.docker.com/_/python) for a complete list of available tags. Ensure a Debian based image is selected.
