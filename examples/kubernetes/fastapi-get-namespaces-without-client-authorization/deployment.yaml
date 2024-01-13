@@ -126,6 +126,12 @@ spec:
             port: 8080
           initialDelaySeconds: 3
           periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
         command: ["/bin/sh"]
         args: ["-c", "python3 /tmp/app.py"]
       volumes:
