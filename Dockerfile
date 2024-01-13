@@ -1,6 +1,4 @@
 ARG IMAGE_TAG=3.12-bookworm
-ARG ADDITIONAL_PYTHON_PACKAGES="flask gunicorn Twisted"
-
 FROM python:${IMAGE_TAG}
 
 LABEL version="1.0"
@@ -10,6 +8,7 @@ LABEL description="A general purpose Python image with common Python packages in
 RUN apt update && apt upgrade -y && apt -y install python3-dev curl zip git
 
 # Install some common Python modules
+ARG ADDITIONAL_PYTHON_PACKAGES="flask gunicorn Twisted"
 RUN pip3 install boto3 pyyaml GitPython requests kr8s kubernetes fastapi "uvicorn[standard]" $ADDITIONAL_PYTHON_PACKAGES
 
 # Install the AWS CLI
