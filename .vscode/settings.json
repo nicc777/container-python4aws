@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "asyncio",
+        "deepcopy",
+        "fastapi",
+        "getenv",
+        "kubeconfig",
+        "realpath",
+        "traceback",
+        "uvicorn"
+    ]
+}

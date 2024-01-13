@@ -2,6 +2,13 @@
 
 Creating a OCI complaint container using Dockerfile that includes Python, AWS CLI and boto3
 
+## Use Cases
+
+* Python based deployments in Kubernetes (see [examples](./examples/kubernetes/README.md))
+* Running Python scripts using the Docker image (EC2 instances etc.)
+* Where you need to run a Python application using a specific version of Python that is not installed on the host.
+* Probably hundreds of other use cases...
+
 # Build a Container Image using Docker
 
 Run the following command
