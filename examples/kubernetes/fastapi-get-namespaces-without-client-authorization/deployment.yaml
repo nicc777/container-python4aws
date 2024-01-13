@@ -69,22 +69,22 @@ data:
 
     @app.get('/namespaces')
     async def namespaces():
-        namespaces = list()
-        result = dict()
-        try:
-          for namespace in await kr8s.asyncio.get('namespaces', api=kube_api.api):
-            namespace_data = dict()
-            namespace_raw_data = copy.deepcopy(namespace.raw)
-            if 'metadata' in namespace_raw_data:
-              if 'creationTimestamp' in namespace_raw_data['metadata']:
-                namespace_data['CreateTimestamp'] = namespace_raw_data['metadata']['creationTimestamp']
-              if 'labels' in namespace_raw_data['metadata']:
-                namespace_data['Labels'] = namespace_raw_data['metadata']['labels']
-            namespaces.append({"Name": namespace.metadata.name, "Metadata": namespace_data,})
-          result = {"Namespaces": namespaces}
-        except:
-            print('EXCEPTION: {}'.format(traceback.format_exc()))
-        return result
+      namespaces = list()
+      result = dict()
+      try:
+        for namespace in await kr8s.asyncio.get('namespaces', api=kube_api.api):
+          namespace_data = dict()
+          namespace_raw_data = copy.deepcopy(namespace.raw)
+          if 'metadata' in namespace_raw_data:
+            if 'creationTimestamp' in namespace_raw_data['metadata']:
+              namespace_data['CreateTimestamp'] = namespace_raw_data['metadata']['creationTimestamp']
+            if 'labels' in namespace_raw_data['metadata']:
+              namespace_data['Labels'] = namespace_raw_data['metadata']['labels']
+          namespaces.append({"Name": namespace.metadata.name, "Metadata": namespace_data,})
+        result = {"Namespaces": namespaces}
+      except:
+        print('EXCEPTION: {}'.format(traceback.format_exc()))
+      return result
 
     if __name__ == '__main__':
       kube_config_file = os.getenv('KUBECONFIG', None)
