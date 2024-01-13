@@ -6,7 +6,7 @@ FROM python:${IMAGE_TAG}
 RUN apt update && apt upgrade -y && apt -y install python3-dev curl zip git
 
 # Install some common Python modules
-RUN pip3 install boto3 pyyaml GitPython requests
+RUN pip3 install boto3 pyyaml GitPython requests kr8s kubernetes fastapi "uvicorn[standard]" gunicorn Twisted
 
 # Install the AWS CLI
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
