@@ -2,6 +2,9 @@ ARG IMAGE_TAG=3.12-bookworm
 
 FROM python:${IMAGE_TAG}
 
+LABEL version="1.0"
+LABEL description="A general purpose Python image with common Python packages installed that could be useful in AWS and Kubernetes environments."
+
 # Update the system and install some pre-requisites
 RUN apt update && apt upgrade -y && apt -y install python3-dev curl zip git
 
