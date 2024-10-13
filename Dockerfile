@@ -8,7 +8,7 @@ LABEL description="A general purpose Python image with common Python packages in
 RUN apt update && apt upgrade -y && apt -y install python3-dev curl zip git mc vim
 
 # Install some common Python modules
-ARG ADDITIONAL_PYTHON_PACKAGES="flask gunicorn Twisted valkey"
+ARG ADDITIONAL_PYTHON_PACKAGES="flask gunicorn Twisted valkey confluent_kafka fastavro"
 RUN pip3 install boto3 pyyaml GitPython requests kr8s kubernetes fastapi "psycopg[binary]" "uvicorn[standard]" $ADDITIONAL_PYTHON_PACKAGES
 
 # Install the AWS CLI
