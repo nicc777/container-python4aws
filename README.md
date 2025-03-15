@@ -22,11 +22,11 @@ You should now be able to confirm all is working as expected:
 ```shell
 # Confirm Python Version
 podman run --rm python4aws python --version
-# OUTPUT (example): Python 3.12.1
+# OUTPUT (example): Python 3.13.2
 
 # Confirm AWS CLI version
 podman run --rm python4aws aws --version
-# OUTPUT (example): aws-cli/2.15.8 Python/3.11.6 Linux/6.5.0-10010-tuxedo exe/x86_64.debian.12 prompt/off
+# OUTPUT (example): aws-cli/2.24.24 Python/3.12.9 Linux/6.11.0-109018 exe/x86_64.debian.12
 ```
 
 ## Build a specific version of Python
