@@ -1,7 +1,7 @@
-ARG IMAGE_TAG=3.12.9-bookworm
+ARG IMAGE_TAG=3.13.2-bookworm
 FROM docker.io/python:${IMAGE_TAG}
 
-LABEL version="3.12.9-1"
+LABEL version="3.13.2-1"
 LABEL description="A general purpose Python image with common Python packages installed that could be useful in AWS and Kubernetes environments."
 
 # Update the system and install some pre-requisites

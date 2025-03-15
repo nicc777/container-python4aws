@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "asyncio",
+        "Containerfile",
         "deepcopy",
         "fastapi",
         "getenv",
