@@ -1,0 +1,104 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: testing2
+  labels:
+    name: testing2
+  annotations:
+    description: A second namespace used for testing purposes.
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ping-test-script
+  namespace: testing2
+data:
+  app: |
+    import requests
+    import time
+    import traceback
+    print('Calling Remote Service', flush=True)
+    print('-'*60, flush=True)
+    try:
+      print('Calling remote service: http://fastapi-test-service.testing.svc.cluster.local:8080/', flush=True)
+      r = requests.get('http://fastapi-test-service.testing.svc.cluster.local:8080/', timeout=5)
+      print(r.text, flush=True)
+    except:
+      print('EXCEPTION: {}'.format(traceback.format_exc()), flush=True)
+    print('-'*60, flush=True)
+    try:
+      print('Calling remote service: http://fastapi-test-service.testing:8080/', flush=True)
+      r = requests.get('http://fastapi-test-service.testing:8080/', timeout=5)
+      print(r.text, flush=True)
+    except:
+      print('EXCEPTION: {}'.format(traceback.format_exc()), flush=True)
+    print('-'*60, flush=True)
+    print('Sleeping...', flush=True)
+    time.sleep(60.0)
+    print('DONE', flush=True)
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: forever-script
+  namespace: testing2
+data:
+  app: |
+    import time
+    counter = 0
+    while True:
+      counter += 1
+      print(f'Doing another round: {counter}')
+      time.sleep(5.0)
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ping-test-job
+  namespace: testing2
+spec:
+  template:
+    spec:
+      containers:
+      - name: ping-test-job
+        image: ghcr.io/nicc777/container-python4aws:v3.13.5
+        volumeMounts:
+        - name: script-vol
+          mountPath: "/tmp"
+          readOnly: true
+        command: ["/bin/sh"]
+        args: ["-c", "python3 /tmp/app.py"]
+      restartPolicy: Never
+      volumes:
+      - name: script-vol
+        configMap:
+          name: ping-test-script
+          items:
+          - key: app
+            path: app.py
+  backoffLimit: 4
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: foreever-test 
+  namespace: testing2
+spec:
+  containers:
+  - name: forever-test
+    image: ghcr.io/nicc777/container-python4aws:v3.13.5
+    volumeMounts:
+    - name: script-vol
+      mountPath: "/tmp"
+      readOnly: true
+    command: ["/bin/sh"]
+    args: ["-c", "python3 /tmp/app.py"]
+  restartPolicy: Always
+  volumes:
+  - name: script-vol
+    configMap:
+      name: forever-script
+      items:
+      - key: app
+        path: app.py

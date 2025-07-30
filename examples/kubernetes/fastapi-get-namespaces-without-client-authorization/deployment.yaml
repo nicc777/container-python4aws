@@ -99,16 +99,16 @@ metadata:
   name: fastapi-test
   namespace: testing
   labels:
-    app: fastapi-test
+    app.kubernetes.io/name: fastapi-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fastapi-test
+      app.kubernetes.io/name: fastapi-test
   template:
     metadata:
       labels:
-        app: fastapi-test
+        app.kubernetes.io/name: fastapi-test
     spec:
       serviceAccountName: fastapi-serviceaccount
       containers:
