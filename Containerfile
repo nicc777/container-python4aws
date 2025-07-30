@@ -1,4 +1,4 @@
-ARG IMAGE_TAG=3.13.3-bookworm
+ARG IMAGE_TAG=3.13.5-bookworm
 FROM docker.io/python:${IMAGE_TAG}
 
 ARG RELEASE_TAG
