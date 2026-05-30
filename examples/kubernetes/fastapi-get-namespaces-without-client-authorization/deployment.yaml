@@ -20,9 +20,9 @@ metadata:
   name: fastapi-clusterrole
   namespace: testing
 rules:
-- apiGroups: ["", "metrics.k8s.io"]
-  resources: ["namespaces"]
-  verbs: ["get", "list"]
+  - apiGroups: ["", "metrics.k8s.io"]
+    resources: ["namespaces"]
+    verbs: ["get", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -30,13 +30,13 @@ metadata:
   name: fastapi-global-clusterrolebinding
   namespace: testing
 subjects:
-- kind: ServiceAccount
-  name: fastapi-serviceaccount
-  namespace: testing
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: system:anonymous
-roleRef: 
+  - kind: ServiceAccount
+    name: fastapi-serviceaccount
+    namespace: testing
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: system:anonymous
+roleRef:
   kind: ClusterRole
   name: fastapi-clusterrole
   apiGroup: rbac.authorization.k8s.io
@@ -112,35 +112,35 @@ spec:
     spec:
       serviceAccountName: fastapi-serviceaccount
       containers:
-      - name: fastapi-test
-        image: ghcr.io/nicc777/container-python4aws:v3.13.5
-        volumeMounts:
-        - name: fastapi-code-vol
-          mountPath: "/tmp"
-          readOnly: true
-        ports:
-        - containerPort: 8080
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 3
-          periodSeconds: 3
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 3
-          periodSeconds: 3
-        command: ["/bin/sh"]
-        args: ["-c", "python3 /tmp/app.py"]
+        - name: fastapi-test
+          image: ghcr.io/nicc777/container-python4aws:latest
+          volumeMounts:
+            - name: fastapi-code-vol
+              mountPath: "/tmp"
+              readOnly: true
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          command: ["/bin/sh"]
+          args: ["-c", "python3 /tmp/app.py"]
       volumes:
-      - name: fastapi-code-vol
-        configMap:
-          name: fastapi-code-dm
-          items:
-          - key: app
-            path: app.py
+        - name: fastapi-code-vol
+          configMap:
+            name: fastapi-code-dm
+            items:
+              - key: app
+                path: app.py
 ---
 apiVersion: v1
 kind: Service
@@ -151,6 +151,6 @@ spec:
   selector:
     app.kubernetes.io/name: fastapi-test
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

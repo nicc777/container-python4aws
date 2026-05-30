@@ -61,44 +61,44 @@ spec:
   template:
     spec:
       containers:
-      - name: ping-test-job
-        image: ghcr.io/nicc777/container-python4aws:v3.13.5
-        volumeMounts:
-        - name: script-vol
-          mountPath: "/tmp"
-          readOnly: true
-        command: ["/bin/sh"]
-        args: ["-c", "python3 /tmp/app.py"]
+        - name: ping-test-job
+          image: ghcr.io/nicc777/container-python4aws:latest
+          volumeMounts:
+            - name: script-vol
+              mountPath: "/tmp"
+              readOnly: true
+          command: ["/bin/sh"]
+          args: ["-c", "python3 /tmp/app.py"]
       restartPolicy: Never
       volumes:
-      - name: script-vol
-        configMap:
-          name: ping-test-script
-          items:
-          - key: app
-            path: app.py
+        - name: script-vol
+          configMap:
+            name: ping-test-script
+            items:
+              - key: app
+                path: app.py
   backoffLimit: 4
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: foreever-test 
+  name: foreever-test
   namespace: testing2
 spec:
   containers:
-  - name: forever-test
-    image: ghcr.io/nicc777/container-python4aws:v3.13.5
-    volumeMounts:
-    - name: script-vol
-      mountPath: "/tmp"
-      readOnly: true
-    command: ["/bin/sh"]
-    args: ["-c", "python3 /tmp/app.py"]
+    - name: forever-test
+      image: ghcr.io/nicc777/container-python4aws:latest
+      volumeMounts:
+        - name: script-vol
+          mountPath: "/tmp"
+          readOnly: true
+      command: ["/bin/sh"]
+      args: ["-c", "python3 /tmp/app.py"]
   restartPolicy: Always
   volumes:
-  - name: script-vol
-    configMap:
-      name: forever-script
-      items:
-      - key: app
-        path: app.py
+    - name: script-vol
+      configMap:
+        name: forever-script
+        items:
+          - key: app
+            path: app.py
