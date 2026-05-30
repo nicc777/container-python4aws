@@ -1,4 +1,6 @@
-ARG IMAGE_TAG=3.13.5-bookworm
+ARG IMAGE_TAG=3-slim-trixie
+ARG DEBIAN_FRONTEND=noninteractive
+
 FROM docker.io/python:${IMAGE_TAG}
 
 ARG RELEASE_TAG
@@ -16,7 +18,7 @@ RUN pip3 install boto3 pyyaml GitPython requests kr8s kubernetes fastapi "psycop
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
 
 # Install Helm and Kubectl CLI tools
-RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 RUN install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
